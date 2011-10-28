@@ -15,7 +15,7 @@ export MallocGuardEdges=YES
 export MallocStackLogging=YES
 export MallocStackLoggingNoCompact=YES
 export NSAutoreleaseFreedObjectCheckEnabled=YES
-  
+
 export CFZombieLevel=3
 export NSZombieEnabled=YES
 
@@ -23,6 +23,6 @@ export NSZombieEnabled=YES
 RETVAL=$?
 
 exit $RETVAL
-	
+
 
 

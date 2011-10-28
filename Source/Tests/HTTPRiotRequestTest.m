@@ -10,7 +10,7 @@
 #import "HRFormatJSON.h"
 
 @interface HRRequestOperationTest : GHAsyncTestCase {
-} 
+}
 @end
 
 @implementation HRRequestOperationTest
@@ -33,25 +33,25 @@
 
 - (void)testShouldHandlePOST {
     [self prepare];
-    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:@"bob", @"name", 
-                                @"foo@email.com", @"email", 
+    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:@"bob", @"name",
+                                @"foo@email.com", @"email",
                                 @"101 Cherry Lane", @"address", nil];
     id bodyData = [HRFormatJSON encode:body error:nil];
     NSDictionary *opts = [NSDictionary dictionaryWithObject:bodyData forKey:@"body"];
-    
+
     [HRTestPerson2 postPath:@"/person" withOptions:opts object:@"POST"];
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
 }
 
 - (void)testShouldHandlePUT {
     [self prepare];
-    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:@"bob", @"name", 
-                                @"foo@email.com", @"email", 
+    NSDictionary *body = [NSDictionary dictionaryWithObjectsAndKeys:@"bob", @"name",
+                                @"foo@email.com", @"email",
                                 @"101 Cherry Lane", @"address", nil];
     NSString *bodyData = [[HRFormatJSON encode:body error:nil] copy];
     NSDictionary *opts = [[NSDictionary alloc ] initWithObjectsAndKeys:bodyData, @"body", nil];
     [bodyData release];
-    
+
     [HRTestPerson2 putPath:@"/person/1" withOptions:opts object:@"PUT"];
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
     [opts release];
@@ -65,10 +65,10 @@
 
 - (void)testShouldHandleBasicAuth {
     [self prepare];
-    
+
     NSDictionary *auth = [NSDictionary dictionaryWithObjectsAndKeys:@"username@email.com", @"username", @"test", @"password", nil];
     NSDictionary *opts = [NSDictionary dictionaryWithObject:auth forKey:@"basicAuth"];
-    
+
     [HRTestPerson2 getPath:@"/auth" withOptions:opts object:@"BasicAuth"];
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:10.0];
 }
@@ -76,16 +76,16 @@
 - (void)testShouldHandleCanceledRequest {
     NSOperation *op = [HRTestPerson2 getPath:@"/timeout" withOptions:nil object:@"CanceledRequest"];
     [op cancel];
-    GHAssertTrue([op isCancelled], nil); 
+    GHAssertTrue([op isCancelled], nil);
 }
 
 - (void)testShouldCancelAllRequests {
     [HRTestPerson2 getPath:@"/timeout" withOptions:nil object:nil];
     [HRTestPerson2 getPath:@"/timeout" withOptions:nil object:nil];
     [HRTestPerson2 getPath:@"/timeout" withOptions:nil object:nil];
-    
+
     [[HROperationQueue sharedOperationQueue] cancelAllOperations];
-    GHAssertTrue([[[HROperationQueue sharedOperationQueue] operations] count] == 0, nil); 
+    GHAssertTrue([[[HROperationQueue sharedOperationQueue] operations] count] == 0, nil);
 }
 
 - (void)testShouldHandleFormattingXML {
@@ -110,9 +110,9 @@
 
 - (void)restConnection:(NSURLConnection *)connection didFailWithError:(NSError *)error object:(id)method {
     if(method) {
-        NSString *prefix = @"testShouldHandle";    
+        NSString *prefix = @"testShouldHandle";
         NSString *selector = [prefix stringByAppendingString:method];
-        [self notify:kGHUnitWaitStatusFailure forSelector:NSSelectorFromString(selector)];   
+        [self notify:kGHUnitWaitStatusFailure forSelector:NSSelectorFromString(selector)];
     }
 }
 

@@ -11,7 +11,7 @@
 @interface HRRestModelTest : GHTestCase {} @end
 
 @implementation HRRestModelTest
-- (void) testSetsBaseURL {   
+- (void) testSetsBaseURL {
     GHAssertEqualObjects(@"http://localhost:4567", [[HRTestPerson baseURL] absoluteString], nil);
     GHAssertEqualObjects([NSURL URLWithString:@"http://localhost:4567"], [HRTestPerson2 baseURL], nil);
 }
@@ -47,10 +47,10 @@
     // defaultParams: {foo: 'bar', bada: 'bing'}
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"5",@"limit", nil];
     NSDictionary *opts = [NSDictionary dictionaryWithObject:params forKey:@"params"];
-    
+
     NSDictionary *mergedOpts = [HRTestPerson3 mergedOptions:opts];
     params = [mergedOpts valueForKey:@"params"];
-    
+
     GHAssertEqualObjects([params valueForKey:@"limit"], @"5", nil);
     GHAssertEqualObjects([params valueForKey:@"bada"], @"bing", nil);
 }
@@ -59,10 +59,10 @@
     // defaultParams: {foo: 'bar', bada: 'bing'}
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"123",@"foo", nil];
     NSDictionary *opts = [NSDictionary dictionaryWithObject:params forKey:@"params"];
-    
+
     NSDictionary *mergedOpts = [HRTestPerson3 mergedOptions:opts];
     params = [mergedOpts valueForKey:@"params"];
-    
+
     GHAssertEqualObjects([params valueForKey:@"foo"], @"123", nil);
     GHAssertEqualObjects([params valueForKey:@"bada"], @"bing", nil);
 }
@@ -74,7 +74,7 @@
     NSURL *h6URL = [NSURL URLWithString:@"http://bar.com"];
     [HRTestPerson5 setBaseURL:h5URL];
     [HRTestPerson6 setBaseURL:h6URL];
-    
+
     GHAssertEqualObjects([h5attrs objectForKey:@"baseURL"], h5URL, nil);
     GHAssertEqualObjects([h6attrs objectForKey:@"baseURL"], h6URL, nil);
 }

@@ -1,7 +1,7 @@
 /**
  * @file HRResponseDelegate.h Protocol for the response delegate methods.
  */
- 
+
 //
 //  HRResponseDelegate.h
 //  HTTPRiot
@@ -13,7 +13,7 @@
 /**
  * @protocol HRResponseDelegate
  *
- * Implementing the HRResponseDelegate protocol allows you to handle requests.  
+ * Implementing the HRResponseDelegate protocol allows you to handle requests.
  */
 @protocol HRResponseDelegate <NSObject>
 @optional

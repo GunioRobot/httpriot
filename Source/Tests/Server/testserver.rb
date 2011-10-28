@@ -38,16 +38,16 @@ end
 # simple person model
 class Person < Sequel::Model
   plugin :validation_helpers
-  
+
   def validate
     validates_presence([:name, :email, :address], {})
   end
-  
+
   def before_create
     self.created_at = Time.now
   end
 
-  
+
   def self.respond(params)
     #edit or create
     if params[:id]
@@ -83,15 +83,15 @@ end
 before do
   #pp request.env
   def xml?
-    request.env['CONTENT_TYPE'] == "application/xml" || 
+    request.env['CONTENT_TYPE'] == "application/xml" ||
     request.env['REQUEST_URI'].split('.')[1] == 'xml'
   end
-  # 
+  #
   def json?
-    request.env['CONTENT_TYPE'] == "application/json" || 
+    request.env['CONTENT_TYPE'] == "application/json" ||
     request.env['REQUEST_URI'].split('.')[1] == 'json'
   end
-  
+
   def people_xml
     @people ||= Person.all.collect { |p| p.values}
     xml = Builder::XmlMarkup.new
@@ -108,7 +108,7 @@ before do
       end
     end
   end
-  
+
   if xml?
     content_type 'application/xml'
   elsif json?
@@ -126,26 +126,26 @@ get '/search' do
 end
 
 #GET /people returns all posts as json
-get '/people*' do 
-  pp request 
+get '/people*' do
+  pp request
   @people = Person.all.collect { |p| p.values }
-  
+
   if json?
     return @people.to_json
   elsif xml?
     return people_xml
   end
-  
+
   erb :people
 end
- 
+
 #GET /person/1 returns that post as json
 get '/person/:id' do
   pp "GETTING PERSON"
   Person.find("id = ?", params[:id]).values.to_json
   #Person.find(params[:id]).values.to_json
 end
- 
+
 #PUT /person/1 update that puts with json
 put '/person/:id' do
   person = Person.find("id = ?", params[:id])
@@ -155,7 +155,7 @@ put '/person/:id' do
     person.values.to_json
   end
 end
- 
+
 #POST /post body with data field set to JSON: { "title": "test", "body": "body test" }
 post '/person' do
   data = JSON.parse(request.body.read)
@@ -169,15 +169,15 @@ post '/person/form-data' do
   if p = Person.create(params)
     status 201
   end
-  
+
   redirect "/people"
 end
- 
+
 #DELETE /post/1 deletes post
 delete '/person/delete/:id' do
   person = Person.find("id = ?", params[:id])
   if person.destroy
-    status 200 
+    status 200
     person.values.to_json
   end
 end

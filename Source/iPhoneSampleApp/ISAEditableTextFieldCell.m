@@ -19,16 +19,16 @@
         _labelField.font = [UIFont boldSystemFontOfSize:12.0];
         _labelField.textAlignment = UITextAlignmentRight;
         _labelField.textColor = [UIColor grayColor];
-        
+
         _valueField = [[UITextField alloc] init];
         _valueField.font = [UIFont systemFontOfSize:14.0];
         _valueField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _valueField.keyboardType = UIKeyboardTypeAlphabet;
         _valueField.returnKeyType = UIReturnKeyDone;
-        
+
         [self.contentView addSubview:_labelField];
         [self.contentView addSubview:_valueField];
-        
+
     }
     return self;
 }

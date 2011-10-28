@@ -1,18 +1,18 @@
 = v0.6.8 2010-01-09
   * Updates KissXML.  Fixes possible app store rejection due to isa-swizzling.
   * XML parsing speedups (side effect of KissXML upgrade)
-  
+
 = v0.6.7 2009-12-22
   * Support for 3.1.2
   * Fix documentation errors
   * Fix error domain
   * Update GHUnit to latest
   * Optimize response handling to use built in status code strings
-  
+
 = v0.6.6 2009-09-30
   * Fix NSXML compilation errors on some 3.1 devices
-  
-= v0.6.5 2009-09-27 
+
+= v0.6.5 2009-09-27
   * Support for iPhone OS 3.1
   * Support for array parameters
   * Attempt to use ASCII encoding if UTF8 fails

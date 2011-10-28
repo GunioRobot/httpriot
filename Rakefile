@@ -17,10 +17,10 @@ namespace :iphone do
   end
 end
 
-namespace :sdk do  
-  desc 'Build and package all SDKs' 
+namespace :sdk do
+  desc 'Build and package all SDKs'
   task :dist => ['iphone:build', 'sdk:package']
-  
+
   desc "Build Release Versions (iphone: #{IPHONE_BUILD_TARGETS.join(', ')}) (osx:#{OSX_BUILD_TARGETS.join(', ')}) of the static library for the simulator and device"
   task :build => :clean do
     rm_r(Project.build_dir) if File.exists?(Project.build_dir)
@@ -28,23 +28,23 @@ namespace :sdk do
       system("xcodebuild -target libhttpriot -configuration #{CONFIGURATION} -sdk iphonesimulator#{version}")
       system("xcodebuild -target libhttpriot -configuration #{CONFIGURATION} -sdk iphoneos#{version}")
     end
-    
+
     OSX_BUILD_TARGETS.each do |version|
       system("ARCHS='i386' xcodebuild -target libhttpriot -configuration #{CONFIGURATION} -sdk macosx#{version}")
       system("ARCHS='i386' xcodebuild -target HTTPRiot -configuration #{CONFIGURATION} -sdk macosx#{version}")
     end
   end
-  
+
   desc 'Clean all targets'
   task :clean do
     system("xcodebuild clean -alltargets")
   end
-  
+
   desc 'Generate the documentation'
   task :doc do
     system("xcodebuild -target Documentation -configuration #{CONFIGURATION} -sdk macosx10.5")
   end
-  
+
   desc 'Install the SDK in ~/Library/SDks'
   task :install do
     cd Project.project_dir
@@ -74,39 +74,39 @@ class SDKSettings
     @sdk = sdk
     @target = target.to_s
   end
-  
+
   def iphone?
     @sdk == 'iphoneos'
   end
-  
+
   def simulator?
     @sdk == 'iphonesimulator'
   end
-  
+
   def osx?
     !iphone? && !simulator?
   end
-  
+
   def osx_minimum_build_target
     OSX_BUILD_TARGETS.min
   end
-  
+
   def iphone_minimum_build_target
     IPHONE_BUILD_TARGETS.min
   end
-  
+
   def minimal_display_name
     iphone? ? 'Device' : 'Simulator'
   end
-  
+
   def display_name
     iphone? ? "Device - iPhone OS #{@target}" : "Simulator - iPhone OS #{@target}"
   end
-  
+
   def alternate_sdk
     "#{@name}#{@sdk}#{@version}"
   end
-  
+
   def default_properties
     if iphone?
       {
@@ -133,7 +133,7 @@ class SDKSettings
         }
      end
   end
-  
+
   def to_plist
     pl = {
       "MinimalDisplayName"            => minimal_display_name,
@@ -148,7 +148,7 @@ class SDKSettings
       "DefaultProperties"             => default_properties,
       "CanonicalName"                 => (osx? ? "macosx#{@target}" : alternate_sdk)
     }
-    
+
     pl.merge("AlternateSDK" => alternate_sdk) if !osx?
     pl.to_plist
   end
@@ -158,7 +158,7 @@ class Project
   def self.out
     @out ||= %x[xcodebuild -list]
   end
-  
+
   def self.active_config
     config = 'Debug'
     out.each_line do |line|
@@ -166,7 +166,7 @@ class Project
     end
     config
   end
-  
+
   def self.active_product
     proj = ''
     out.scan(/(.+?)\s\(Active\)/) do |m|
@@ -174,32 +174,32 @@ class Project
     end
     File.join(product_dir, proj)
   end
-  
+
   def self.project_dir
     File.dirname(__FILE__)
   end
-  
+
   def self.build_dir
     File.join(project_dir, 'build')
   end
-  
+
   def self.product_dir
     File.join(build_dir, active_config)
   end
-  
+
   def self.plist
     File.join(project_dir, 'Info.plist')
   end
-  
+
   def self.targets
     IPHONE_BUILD_TARGETS.collect { |t| t.to_s }
   end
 end
 
 
-# Creates iPhone friendly SDKs for static libraries and archives them for distribution.  
-# By default the package task will create an SDK for every target (2.0, 2.1, 2.2, 2.2.1, 3.0) 
-# for both the simulator and the device.  An SDK is simply a collection of files laid out in a 
+# Creates iPhone friendly SDKs for static libraries and archives them for distribution.
+# By default the package task will create an SDK for every target (2.0, 2.1, 2.2, 2.2.1, 3.0)
+# for both the simulator and the device.  An SDK is simply a collection of files laid out in a
 # specific fasion with an included SDKSettings.plist file.
 #
 #  /iphoneos3.0.sdk
@@ -207,36 +207,36 @@ end
 #    /usr/local/lib/lib{LIBRARY_NAME}.a
 #    /usr/local/include/{PROJECT_NAME}/{HEADERS}
 #
-# Any project can link to these sdks using the "Additional SDks" settings in the build settings 
+# Any project can link to these sdks using the "Additional SDks" settings in the build settings
 # of a project and setting additional linker flags to the project name -l{PROJECT_NAME}
 #
 # IMPORTANT NOTE: This package tool uses `agvtool` to determine the version of your library.
-# If you plan on using it in your own projects you'll need to make sure it's setup to use 
+# If you plan on using it in your own projects you'll need to make sure it's setup to use
 # `agvtool`.  You can get a run down on it here: http://chanson.livejournal.com/125568.html
 #
 class SDKPackage < Rake::PackageTask
-  
+
   # Project root directory unless provided
   attr_accessor :product_name
-  
+
   # Build products dir.  Uses `build` by default
   attr_accessor :build_dir
-  
+
   # Debug, Release, etc.  Release by default
   attr_accessor :configuration
-  
+
   # Deployment target (2.0, 2.1, 2.2, 2.2.1, 3.0).  Contains all by default.
   attr_accessor :targets
-  
+
   # SDKs to package.  iphonesimulator, iphoneos by default
   attr_accessor :sdks
-  
+
   def initialize(name = nil, version = nil)
     init(name, version)
     yield self if block_given?
     generate_tasks
   end
-  
+
   def init(name, version)
     super
     @product_name = File.basename(Project.project_dir)
@@ -249,10 +249,10 @@ class SDKPackage < Rake::PackageTask
     @configuration = 'Release'
     @targets = Project.targets
   end
-  
+
   def generate_tasks
     namespace :sdk do
-    
+
       desc 'Build the iPhoneOS and iPhoneSimulator SDK package'
       task :package do
         package_root = File.join(package_dir, package_name)
@@ -263,30 +263,30 @@ class SDKPackage < Rake::PackageTask
           @sdks.each do |sdk|
             # Create the SDK dir
             cd package_root
-            
+
             target = '' if sdk == 'macosx'
             sdk_dir = "#{sdk}#{target}.sdk"
-            
-            next if File.exists?(sdk_dir)            
+
+            next if File.exists?(sdk_dir)
             mkdir sdk_dir
-          
-          
+
+
             # Create the SDKSettings.plist file
             cd sdk_dir
             sdk_properties = SDKSettings.new(name, version, sdk, target).to_plist
             File.open(File.join(pwd, 'SDKSettings.plist'), 'w+') do |f|
               f << sdk_properties
             end
-          
+
             # Copy the header files over
             if sdk == 'macosx' && File.exists?(File.join(@build_dir, @configuration, "usr"))
               built_sdk_dir = File.join(@build_dir, @configuration)
             else
               built_sdk_dir = File.join(@build_dir, "#{@configuration}-#{sdk}#{target}")
             end
-            
+
             cp_r File.join(built_sdk_dir, "usr"), "./"
-            
+
             # Create the lib directory and copy over the static library
             lib_dir = File.join(pwd, 'usr', 'local', 'lib')
             mkdir lib_dir
@@ -295,13 +295,13 @@ class SDKPackage < Rake::PackageTask
             cp File.join(built_sdk_dir, "lib#{name}.a"), './'
           end
         end
-        
+
         # Move the framework over
         package_root = File.join(package_dir, package_name)
         cd package_root
         framework = Dir["#{File.join(@build_dir, @configuration)}/*.framework"].first
         cp_r(framework, './') if framework
-        
+
         [
           [need_tar, tgz_file, "z"],
           [need_tar_gz, tar_gz_file, "z"],
@@ -313,19 +313,19 @@ class SDKPackage < Rake::PackageTask
             end
           end
         end
-        
+
         if need_zip
           cd package_dir do
             sh %{#{@zip_command} -r #{zip_file} #{package_name}}
           end
         end
       end
-    
+
       desc 'Clean the package directory'
       task :clean do
         rm_r package_dir
       end
-      
+
       desc 'Clean and package again'
       task :repackage => [:clean, :package_all]
     end

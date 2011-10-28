@@ -7,7 +7,7 @@
 																				  NULL,
 																				  (CFStringRef)@":/?=,!$&'()*+;[]@#",
 																				  CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
-	
+
 	return [escapedString autorelease];
 }
 @end

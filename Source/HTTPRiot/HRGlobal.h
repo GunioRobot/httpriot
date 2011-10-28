@@ -24,7 +24,7 @@ extern NSString *kHRClassAttributesParamsKey;
 /// Key for body
 extern NSString *kHRClassAttributesBodyKey;
 
- 
+
 /**
  * Supported REST methods.
  * @see HRRequestOperation
@@ -63,5 +63,5 @@ typedef enum {
 #define HRLOG NSLog
 #else
 /// Logging Helper
-#define HRLOG    
+#define HRLOG
 #endif

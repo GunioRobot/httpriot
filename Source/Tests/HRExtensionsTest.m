@@ -29,11 +29,11 @@
     NSArray *characters = [NSArray arrayWithObjects:@"Fawkes", @"dogmeat", nil];
     NSDictionary *params = [NSDictionary dictionaryWithObject:characters forKey:@"character"];
     GHAssertEqualStrings([params toQueryString], @"character=Fawkes&character=dogmeat", nil);
-    
+
     NSArray *moreCharacters = [NSArray arrayWithObjects:@"Clover", @"Jericho", nil];
     NSDictionary *params2 = [NSDictionary dictionaryWithObjectsAndKeys:characters, @"character", moreCharacters, @"more", nil];
     GHAssertEqualStrings([params2 toQueryString], @"more=Clover&more=Jericho&character=Fawkes&character=dogmeat", nil);
-    
+
     NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:characters, @"character", @"Lone Wanderer", @"accompanies", nil];
     GHAssertEqualStrings([params3 toQueryString], @"accompanies=Lone%20Wanderer&character=Fawkes&character=dogmeat", nil);
 }

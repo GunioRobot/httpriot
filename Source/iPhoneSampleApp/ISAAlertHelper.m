@@ -10,10 +10,10 @@
 void ISAAlertWithMessage(NSString *message)
 {
 	/* open an alert with an OK button */
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"iPhone Sample App" 
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"iPhone Sample App"
 													message:message
-												   delegate:nil 
-										  cancelButtonTitle:@"OK" 
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
 										  otherButtonTitles: nil];
 	[alert show];
 	[alert release];

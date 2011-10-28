@@ -14,33 +14,33 @@
 #define NSXMLDocument DDXMLDocument
 #endif
 
-#ifndef NSXMLNodeKind                                                   
-#define NSXMLInvalidKind                 DDXMLInvalidKind              
-#define NSXMLDocumentKind                DDXMLDocumentKind             
-#define NSXMLElementKind                 DDXMLElementKind              
-#define NSXMLAttributeKind               DDXMLAttributeKind            
-#define NSXMLNamespaceKind               DDXMLNamespaceKind            
+#ifndef NSXMLNodeKind
+#define NSXMLInvalidKind                 DDXMLInvalidKind
+#define NSXMLDocumentKind                DDXMLDocumentKind
+#define NSXMLElementKind                 DDXMLElementKind
+#define NSXMLAttributeKind               DDXMLAttributeKind
+#define NSXMLNamespaceKind               DDXMLNamespaceKind
 #define NSXMLProcessingInstructionKind   DDXMLProcessingInstructionKind
-#define NSXMLCommentKind                 DDXMLCommentKind              
-#define NSXMLTextKind                    DDXMLTextKind                 
-#define NSXMLDTDKind                     DDXMLDTDKind                  
-#define NSXMLEntityDeclarationKind       DDXMLEntityDeclarationKind    
-#define NSXMLAttributeDeclarationKind    DDXMLAttributeDeclarationKind 
-#define NSXMLElementDeclarationKind      DDXMLElementDeclarationKind   
-#define NSXMLNotationDeclarationKind     DDXMLNotationDeclarationKind  
+#define NSXMLCommentKind                 DDXMLCommentKind
+#define NSXMLTextKind                    DDXMLTextKind
+#define NSXMLDTDKind                     DDXMLDTDKind
+#define NSXMLEntityDeclarationKind       DDXMLEntityDeclarationKind
+#define NSXMLAttributeDeclarationKind    DDXMLAttributeDeclarationKind
+#define NSXMLElementDeclarationKind      DDXMLElementDeclarationKind
+#define NSXMLNotationDeclarationKind     DDXMLNotationDeclarationKind
 
 #define NSXMLNodeKind DDXMLNodeKind;
 #endif
 
 #ifndef NSXMLNodeOptionsNone
-#define NSXMLNodeOptionsNone         DDXMLNodeOptionsNone        
-#define NSXMLNodeExpandEmptyElement  DDXMLNodeExpandEmptyElement 
+#define NSXMLNodeOptionsNone         DDXMLNodeOptionsNone
+#define NSXMLNodeExpandEmptyElement  DDXMLNodeExpandEmptyElement
 #define NSXMLNodeCompactEmptyElement DDXMLNodeCompactEmptyElement
-#define NSXMLNodePrettyPrint         DDXMLNodePrettyPrint        
+#define NSXMLNodePrettyPrint         DDXMLNodePrettyPrint
 #endif
 
 #ifndef NSXMLDocumentXMLKind
-#define NSXMLDocumentXMLKind   DDXMLDocumentXMLKind 
+#define NSXMLDocumentXMLKind   DDXMLDocumentXMLKind
 #define NSXMLDocumentXHTMLKind DDXMLDocumentXHTMLKind
 #define NSXMLDocumentHTMLKind  DDXMLDocumentHTMLKind
 #define NSXMLDocumentTextKind  DDXMLDocumentTextKind

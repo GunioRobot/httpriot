@@ -18,7 +18,7 @@
 
 #pragma mark -
 #pragma mark Application lifecycle
-- (void)applicationDidFinishLaunching:(UIApplication *)application {    
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
     ISAPeopleTableViewController *peopleController = [[[ISAPeopleTableViewController alloc] init] autorelease];
     navigationController.viewControllers = [NSArray arrayWithObjects:peopleController, nil];
     [HRRestModel setBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];

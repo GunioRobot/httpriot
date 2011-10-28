@@ -23,7 +23,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 		[NSException raise:NSInvalidArgumentException format:nil];
 	if ([string length] == 0)
 		return [NSData data];
-	
+
 	static char *decodingTable = NULL;
 	if (decodingTable == NULL)
 	{
@@ -35,7 +35,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 		for (i = 0; i < 64; i++)
 			decodingTable[(short)encodingTable[i]] = i;
 	}
-	
+
 	const char *characters = [string cStringUsingEncoding:NSASCIIStringEncoding];
 	if (characters == NULL)     //  Not an ASCII string!
 		return nil;
@@ -62,7 +62,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 				return nil;
 			}
 		}
-		
+
 		if (bufferLength == 0)
 			break;
 		if (bufferLength == 1)      //  At least two characters are needed to produce one byte!
@@ -70,7 +70,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 			free(bytes);
 			return nil;
 		}
-		
+
 		//  Decode the characters in the buffer to bytes.
 		bytes[length++] = (buffer[0] << 2) | (buffer[1] >> 4);
 		if (bufferLength > 2)
@@ -78,7 +78,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 		if (bufferLength > 3)
 			bytes[length++] = (buffer[2] << 6) | buffer[3];
 	}
-	
+
 	realloc(bytes, length);
 	return [NSData dataWithBytesNoCopy:bytes length:length];
 }
@@ -91,7 +91,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 	if (characters == NULL)
 		return nil;
 	NSUInteger length = 0;
-	
+
 	NSUInteger i = 0;
 	while (i < [self length])
 	{
@@ -99,7 +99,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 		short bufferLength = 0;
 		while (bufferLength < 3 && i < [self length])
 			buffer[bufferLength++] = ((char *)[self bytes])[i++];
-		
+
 		//  Encode the bytes in the buffer to four characters, including padding "=" characters if necessary.
 		characters[length++] = encodingTable[(buffer[0] & 0xFC) >> 2];
 		characters[length++] = encodingTable[((buffer[0] & 0x03) << 4) | ((buffer[1] & 0xF0) >> 4)];
@@ -108,9 +108,9 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 		else characters[length++] = '=';
 		if (bufferLength > 2)
 			characters[length++] = encodingTable[buffer[2] & 0x3F];
-		else characters[length++] = '=';	
+		else characters[length++] = '=';
 	}
-	
+
 	NSString *str = [[[NSString alloc] initWithBytesNoCopy:characters length:length encoding:NSASCIIStringEncoding freeWhenDone:YES] autorelease];
     return [str stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }

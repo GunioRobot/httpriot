@@ -26,26 +26,26 @@
 	else
 	{
 		// Note: If you port this code to work with Apple's NSXML, beware of the following:
-		// 
+		//
 		// There is a bug in the NSXMLElement elementsForName: method.
 		// Consider the following XML fragment:
-		// 
+		//
 		// <query xmlns="jabber:iq:private">
 		//   <x xmlns="some:other:namespace"></x>
 		// </query>
-		// 
+		//
 		// Calling [query elementsForName:@"x"] results in an empty array!
-		// 
+		//
 		// However, it will work properly if you use the following:
 		// [query elementsForLocalName:@"x" URI:@"some:other:namespace"]
-		// 
+		//
 		// The trouble with this is that we may not always know the xmlns in advance,
 		// so in this particular case there is no way to access the element without looping through the children.
-		// 
+		//
 		// This bug was submitted to apple on June 1st, 2007 and was classified as "serious".
-		// 
+		//
 		// --!!-- This bug does NOT exist in DDXML --!!--
-		
+
 		return nil;
 	}
 }
@@ -80,9 +80,9 @@
 {
 	// If you use setURI: then the xmlns won't be displayed in the XMLString.
 	// Adding the namespace this way works properly.
-	// 
+	//
 	// This applies to both Apple's NSXML and DDXML.
-	
+
 	[self addNamespace:[DDXMLNode namespaceWithName:@"" stringValue:ns]];
 }
 
@@ -101,12 +101,12 @@
 {
 	NSArray *attributes = [self attributes];
 	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[attributes count]];
-	
+
 	uint i;
 	for(i = 0; i < [attributes count]; i++)
 	{
 		DDXMLNode *node = [attributes objectAtIndex:i];
-		
+
 		[result setObject:[node stringValue] forKey:[node name]];
 	}
 	return result;

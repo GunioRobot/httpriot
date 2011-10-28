@@ -21,14 +21,14 @@
 + (id)decode:(NSData *)data error:(NSError **)error {
     NSError *parseError = nil;
     NSXMLDocument *doc = [[[NSXMLDocument alloc] initWithData:data options:NSXMLDocumentTidyXML error:&parseError] autorelease];
-    
-    if(parseError != nil) {        
+
+    if(parseError != nil) {
         if(error != nil)
             *error = parseError;
-        
+
         return nil;
     }
-    
+
     return [doc toDictionary];
 }
 

@@ -24,19 +24,19 @@
     if(rawString == nil && ([data length] > 0)) {
         rawString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     }
-    
+
     NSError *parseError = nil;
     SBJSON *parser = [[SBJSON alloc] init];
     id results = [parser objectWithString:rawString error:&parseError];
     [parser release];
     [rawString release];
-    
-    if(parseError && !results) {  
-        if(error != nil)      
+
+    if(parseError && !results) {
+        if(error != nil)
             *error = parseError;
         return nil;
     }
-    
+
     return results;
 }
 

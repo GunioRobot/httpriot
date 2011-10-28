@@ -63,7 +63,7 @@
     NSInteger row = ipath.row;
     NSString *label = @"";
     NSString *value = @"";
-    
+
     switch(row) {
         case 0:
             label = @"Name:";
@@ -81,9 +81,9 @@
             label = @"Telephone:";
             value = [self.person valueForKey:@"telephone"];
             break;
-        
+
     }
-    
+
     cell.labelField.text = label;
     cell.valueField.text = value;
 }
@@ -99,7 +99,7 @@
 
 
 
-- (void)viewWillAppear:(BOOL)animated {        
+- (void)viewWillAppear:(BOOL)animated {
     [HRRestModel setDelegate:self];
     [super viewWillAppear:animated];
 }
@@ -132,7 +132,7 @@
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-	
+
 	// Release any cached data, images, etc that aren't in use.
 }
 
@@ -156,15 +156,15 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     static NSString *CellIdentifier = @"Cell";
-    
+
     ISAEditableTextFieldCell *cell = (ISAEditableTextFieldCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[ISAEditableTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell.valueField.delegate = self;
     }
-    
+
     [self prepareCell:cell forIndexPath:indexPath];
     return cell;
 }
@@ -181,8 +181,8 @@
 #pragma mark - Value Field Delegate Methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    
-    
+
+
     return YES;
 }
 

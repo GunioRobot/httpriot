@@ -9,21 +9,21 @@
 #import "HTTPRiotTestHelper.h"
 
 @implementation HRTestPerson
-+ (void)initialize  { 
++ (void)initialize  {
     [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]];
-    [self setBasicAuthWithUsername:@"username@email.com" password:@"test"]; 
+    [self setBasicAuthWithUsername:@"username@email.com" password:@"test"];
 }
 @end
 
-@implementation HRTestPerson2 
-+ (void)initialize  { 
-    [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]]; 
+@implementation HRTestPerson2
++ (void)initialize  {
+    [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]];
 }
 @end
 
 @implementation HRTestPerson3
-+ (void)initialize  { 
-    [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]]; 
++ (void)initialize  {
+    [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"bar", @"foo", @"bing", @"bada", nil];
     [self setHeaders:params];
     [self setDefaultParams:params];
@@ -31,7 +31,7 @@
 @end
 
 @implementation HRTestPerson4
-+ (void)initialize  { 
++ (void)initialize  {
     [self setBaseURL:[NSURL URLWithString:HTTPRiotTestServer]];
     [self setFormat:HRDataFormatXML];
 }

@@ -1,6 +1,6 @@
 ## Running the Unit Tests
 
-### Install Prerequisites 
+### Install Prerequisites
 * sudo gem install sinatra
 * sudo gem install sequel
 * sudo gem install faker

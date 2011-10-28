@@ -51,7 +51,7 @@
     }
 }
 
-- (void)restConnection:(NSURLConnection *)connection didFailWithError:(NSError *)error object:(id)object { 
+- (void)restConnection:(NSURLConnection *)connection didFailWithError:(NSError *)error object:(id)object {
     if([error code] == -1004)
         ISAAlertWithMessage([NSString stringWithFormat:@"%@: Start the test server `ruby Source/Tests/Server/testserver.rb`", [error localizedDescription]]);
 }
@@ -71,23 +71,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tableView.delegate = self;
-    
+
     [HRRestModel setDelegate:self];
     [HRRestModel getPath:@"/people" withOptions:nil object:self];
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];	
+    [super didReceiveMemoryWarning];
 }
 
 
 #pragma mark Table view methods
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *person = [_people objectAtIndex:indexPath.row];
-    
+
     _indexPathOfItemToDelete = indexPath;
     _isDeleting = YES;
-    
+
     [HRRestModel deletePath:[NSString stringWithFormat:@"person/delete/%@", [person valueForKey:@"id"]] withOptions:nil object:nil];
 }
 
@@ -100,15 +100,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     static NSString *CellIdentifier = @"Cell";
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    
+
     cell.textLabel.text = [[_people objectAtIndex:indexPath.row] valueForKey:@"name"];
     return cell;
 }

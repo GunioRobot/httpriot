@@ -7,7 +7,7 @@
 //
 
 @interface iPhoneSampleAppDelegate : NSObject <UIApplicationDelegate> {
-    
+
     UIWindow *window;
     UINavigationController *navigationController;
 }

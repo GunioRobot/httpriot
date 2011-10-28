@@ -55,7 +55,7 @@ typedef struct {
 	NSInteger succeedCount; // Number of succeeded tests
 	NSInteger failureCount; // Number of failed tests
 	NSInteger cancelCount; // Number of aborted tests
-	NSInteger testCount; // Total number of tests 
+	NSInteger testCount; // Total number of tests
 } GHTestStats;
 
 /*!
@@ -117,7 +117,7 @@ extern NSString *NSStringFromGHTestStats(GHTestStats stats);
 - (void)log:(NSString *)message testCase:(id)testCase;
 @end
 
-@interface GHTestOperation : NSOperation { 
+@interface GHTestOperation : NSOperation {
 	id<GHTest> test_;
 }
 @end
@@ -130,19 +130,19 @@ extern NSString *NSStringFromGHTestStats(GHTestStats stats);
  - Stores any test specific logging
  */
 @interface GHTest : NSObject <GHTest, GHTestCaseLogWriter> {
-	
+
 	NSObject<GHTestDelegate> *delegate_; // weak
-	
+
 	id target_;
 	SEL selector_;
-	
+
 	NSString *identifier_;
-	NSString *name_;	
+	NSString *name_;
 	GHTestStatus status_;
 	NSTimeInterval interval_;
 	BOOL disabled_;
 	NSException *exception_; // If failed
-		
+
 	NSMutableArray *log_;
 }
 
